@@ -25,25 +25,20 @@ class Ilib_Payment_Html_Provider_DandomainTest_Postprocess extends Ilib_Payment_
         parent::__construct($merchant, $verification_key, $session_id);
     }
     
+    /**
+     * Sets the payment response 
+     * 
+     * @param array $post all POST params given in the response
+     * @param array $get all GET params given in the response
+     * @param array $session all session variables in the response.
+     * @param array $payment_target the payment target, e.g. the order
+     * @return boolean true on success.
+     */
     public function setPaymentResponse($post, $get, $session, $payment_target) {
         
-        /**
-         * @todo: We need some kind of validation check.
-         * This one is not really good!
-         */
-        
-        if($get['OrderID'] != $payment_target['id']) {
-            throw new Exception('The order id is not valid! ('.$get['OrderID'].', '.$payment_target['id'].')');
-        }
-        
-        $this->amount = $payment_target['arrears'];
-        $this->order_number = $get['orderid'];
-        $this->pbs_status = '000'; /* On dandomain the call is only made on success */
-        $this->transaction_number = 1; /* Test server does not give transact */
-        $this->transaction_status = '-1'; /* On dandomain the call is only made on success */
-        
-        return true;
-    } 
+        $get['transact'] = 1;
+        return parent::setPaymentResponse($post, $get, $session, $payment_target);
+    }
 }
 
 

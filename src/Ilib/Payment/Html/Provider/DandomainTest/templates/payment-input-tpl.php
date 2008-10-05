@@ -1,4 +1,14 @@
 <?php
+/**
+ * HTML input page for payment
+ * 
+ * @author sune jensen <sj@sunet.dk>
+ * @version 0.0.1
+ * @package Payment_Html_Provider_Dandomain
+ * @category Payment
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL
+ */
+
 // md5(OrderID & "+" & Amount & "+" & ChecksumSecretKey & "+" & CurrencyID)
 $checksum = md5($request_get['OrderID'].'+'.$request_get['Amount'].'+'.$verification_key.'+'.$request_get['CurrencyID']);
 ?>
@@ -6,16 +16,16 @@ $checksum = md5($request_get['OrderID'].'+'.$request_get['Amount'].'+'.$verifica
         <form action="https://pay.dandomain.dk/securecapture.asp" method="post" autocomplete="off" id="payment_details">
 
             <input type="hidden" name="TestMode" value="1" />
-            <input type="hidden" name="CurrencyID" title="CurrencyID" value="%%CurrencyID%%">
-            <input type="hidden" name="MerchantNumber" value="%%MerchantNumber%%" >
-            <input type="hidden" name="OrderID" value="%%OrderID%%" >
-            <input type="hidden" name="Amount" value="%%Amount%%" >
-            <input type="hidden" name="SessionId" value="<?php echo session_id(); ?>" >
-            <input type="hidden" name="Checksum" value="<?php echo $checksum; ?>">
-            <input type="hidden" name="OKURL" value="<?php echo $ok_url; ?>" >
-            <input type="hidden" name="FAILURL" value="<?php echo $error_url; ?>" >
-            <input type="hidden" name="OKStatusURL" value="<?php echo $postprocess_url; ?>" >  
-            
+            <input type="hidden" name="CurrencyID" title="CurrencyID" value="%%CurrencyID%%" />
+            <input type="hidden" name="MerchantNumber" value="%%MerchantNumber%%" />
+            <input type="hidden" name="OrderID" value="%%OrderID%%" />
+            <input type="hidden" name="Amount" value="%%Amount%%" />
+            <input type="hidden" name="SessionId" value="<?php echo session_id(); ?>" />
+            <input type="hidden" name="Checksum" value="<?php echo $checksum; ?>" />
+            <input type="hidden" name="OKURL" value="<?php echo $ok_url; ?>" />
+            <input type="hidden" name="FAILURL" value="<?php echo $error_url; ?>" />
+            <input type="hidden" name="OKStatusURL" value="<?php echo $postprocess_url; ?>" />
+            <input type="hidden" name="FAILStatusURL" value="<?php echo $postprocess_url; ?>" />
             
             <p><?php e(__('You are about to pay for your order')); ?></p> 
             <p>
